@@ -29,24 +29,23 @@ $starttime = $starttime [1] + $starttime [0];
 
 // <online>
 $past = time()- 3600;
-sql_query('DELETE FROM ' . prefix . "_session WHERE time < $past");
+sql_query("DELETE FROM p_session WHERE time < $past");
 if(username != 'username') {
         $name = username;
 } else {
         $name = $_SERVER['REMOTE_ADDR'];
         $guest = 1;
 }
-$result = sql_query('SELECT time FROM ' . prefix . "_session WHERE username='$name'");
+$result = sql_query('SELECT time FROM p_session WHERE username='$name'");
 if(sql_fetch_array($result)) {
-        sql_query('UPDATE ' . prefix . "_session SET username='$name', time='" . time(). "', host_addr='" . $_SERVER['REMOTE_ADDR'] . "', local_addr='" . $_SERVER['HTTP_X_FORWARDED_FOR'] . "', guest='$guest' WHERE username='$name'
-");
+        sql_query("UPDATE p_session SET username='$name', time='" . time(). "', host_addr='" . $_SERVER['REMOTE_ADDR'] . "', local_addr='', guest='$guest' WHERE username='$name'");
 } else {
-        sql_query('INSERT INTO ' . prefix . "_session (username, time, host_addr, local_addr, guest) VALUES ('$name', '" . time(). "', '" . $_SERVER['REMOTE_ADDR'] . "', '" . $_SERVER['HTTP_X_FORWARDED_FOR'] . "', '$guest')");
+        sql_query("INSERT INTO p_session (username, time, host_addr, local_addr, guest) VALUES ('$name', '" . time(). "', '" . $_SERVER['REMOTE_ADDR'] . "', '', '$guest')");
 }
 unset($past);
 unset($name);
 unset($guest);
-define('online',sql_num_rows(sql_query("SELECT time FROM ".prefix."_session")));
+define('online',sql_num_rows(sql_query("SELECT time FROM p_session")));
 // </online>
 
 // <language>
