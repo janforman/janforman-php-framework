@@ -103,7 +103,7 @@ function template_start($title, $css)
     echo '<link rel="stylesheet" href="/css/default.css?r=' . version . '" type="text/css"/>'."\n";
     if($css) { echo "<link rel=\"stylesheet\" href=\"/css/$css\" type=\"text/css\"/>\n"; }
     echo '<link rel="stylesheet" href="/css/jquery-ui.css">';
-    echo '<link rel="stylesheet" href="/js/fontawesome-5.3.1/css/all.min.css">';
+    echo '<link rel="stylesheet" href="/css/fontawesome-5.3.1/all.min.css">';
     echo '<script src="/js/jquery-1.10.2.min.js"></script>';
     echo '<script src="/js/ui/1.10.2/jquery-ui.js"></script>';
     echo "\n</head>\n<body>\n";
