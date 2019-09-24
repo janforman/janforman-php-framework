@@ -5,3 +5,4 @@ $GLOBALS['mysqli'] = mysqli_connect($mariadb['ip'], $mariadb['name'], $mariadb['
 if (!$GLOBALS['mysqli']) {
     log_error('mariadb disconnected');
 }
+require './legacy.php';
