@@ -36,7 +36,7 @@ if(username != 'username') {
         $name = $_SERVER['REMOTE_ADDR'];
         $guest = 1;
 }
-$result = sql_query('SELECT time FROM p_session WHERE username='$name'");
+$result = sql_query("SELECT time FROM p_session WHERE username='$name'");
 if(sql_fetch_array($result)) {
         sql_query("UPDATE p_session SET username='$name', time='" . time(). "', host_addr='" . $_SERVER['REMOTE_ADDR'] . "', local_addr='', guest='$guest' WHERE username='$name'");
 } else {
