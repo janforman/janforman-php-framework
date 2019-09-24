@@ -1,3 +1,8 @@
+var tab='inet';
+function gId(id){if(document.getElementById)return document.getElementById(id);else return false;}
+function show(obj){gId(tab).className="";gId(obj).className="active";gId(obj+'-field').focus();switch(obj){case'inet':if(typeof(ac)!='undefined')ac.init(obj+'-field',8);break;case'firms':if(typeof(ac)!='undefined')ac.init(obj+'-field',8)
+;break;}gId(obj+'-field').value=gId(tab+'-field').value;tab=obj; return false;}
+
 addEvent(window, "load", makeNiceTitles);
 var XHTMLNS = "http://www.w3.org/1999/xhtml";
 var CURRENT_NICE_TITLE;
