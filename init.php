@@ -11,7 +11,7 @@ if (!$GLOBALS['mysqli']) {
 }
 require './legacy.php';
 
-if ($_SERVER ['HTTP_HOST'] != domain) {
+if ($_SERVER ['HTTP_HOST'] != 'https://'.domain) {
     header('Location: https://'.domain.$_SERVER ['REQUEST_URI']);
     exit();
 }
