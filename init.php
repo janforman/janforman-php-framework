@@ -125,6 +125,7 @@ function template_start($title, $css)
     echo '<link rel="stylesheet" href="/css/fontawesome-5.3.1/all.min.css">';
     echo '<script src="/js/jquery-1.10.2.min.js"></script>';
     echo '<script src="/js/ui/1.10.2/jquery-ui.js"></script>';
+    echo '<script src="/js/generic.js" type="text/javascript"></script>';
     echo "\n</head>\n<body>\n";
 }
 function template($template, $data)
