@@ -99,7 +99,6 @@ function template_start($title, $css)
     echo "<meta name=\"theme-color\" content=\"#3366cc\" /><meta name=\"msapplication-TileColor\" content=\"#3366cc\" />\n";
     echo "<link rel='manifest' href='/manifest.json'>";
     echo '<title>'.$title."</title>\n";
-
     echo '<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>'."\n";
     echo '<link rel="stylesheet" href="/css/default.css?r=' . version . '" type="text/css"/>'."\n";
     if($css) { echo "<link rel=\"stylesheet\" href=\"/css/$css\" type=\"text/css\"/>\n"; }
@@ -107,9 +106,6 @@ function template_start($title, $css)
     echo '<link rel="stylesheet" href="/js/fontawesome-5.3.1/css/all.min.css">';
     echo '<script src="/js/jquery-1.10.2.min.js"></script>';
     echo '<script src="/js/ui/1.10.2/jquery-ui.js"></script>';
-
-    echo "<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'/>\n";
-    echo "<link rel='stylesheet' href='/css/default.css?v=".version."' type='text/css'/>\n";
     echo "\n</head>\n<body>\n";
 }
 
