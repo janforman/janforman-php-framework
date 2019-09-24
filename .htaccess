@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^j-(.*)$ %{DOCUMENT_ROOT}/load.php?n=$1 [L,QSA]

@@ -6,6 +6,6 @@ $mariadb['db'] = 'framework';
 $mariadb['name'] = 'root';
 $mariadb['pass'] = '';
 define('sitename', '');
-define('domain', 'janforman.com');
+define('domain', 'https://janforman.com');
 define('salt', 'tu@S+N^Q4r-4}(w/');
 define('version', '1.00');

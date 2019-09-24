@@ -31,10 +31,45 @@ $starttime = $starttime [1] + $starttime [0];
 $past = time() - 1800;
 sql_query('DELETE FROM '.prefix."_session WHERE time < $past");
 
-
 // <language>
-define('language', czech);
-include './lang/'.language.'.lng';
+$newlang = $_GET['newlang'];
+$lang = $_COOKIE['lang'];
+if(isset($newlang)) {
+if(file_exists('./lang/' . $newlang . '.lng')) {
+$language = $newlang;
+setcookie('lang', $language, time()+ 31536000, null, null, null, true);
+} else {
+setcookie('lang', $language, time()+ 31536000, null, null, null, true);
+}
+} elseif(isset($lang)) {
+if(file_exists('./lang/' . $lang . '.lng')) {
+$language = $lang;
+} else {
+$language = 'english';
+}
+} else {
+$language = 'english';
+if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)== '') {
+$language = 'czech';
+}
+if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)== 'cs') {
+$language = 'czech';
+}
+if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)== 'sk') {
+$language = 'czech';
+}
+if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)== 'de') {
+$language = 'german';
+}
+setcookie('lang', $language, time()+ 31536000, null, null, null, true);
+}
+include './lang/' . $language . '.lng';
+define('language', $language);
+unset($newlang);
+unset($lang);
+unset($language);
+// </language>
+
 
 // <0min cache>
 if ($GLOBALS ['cache'] == '') {
