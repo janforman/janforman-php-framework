@@ -91,16 +91,16 @@ unset($language);
 // </language>
 
 
-// <0min cache>
+// <10min cache>
 if ($GLOBALS ['cache'] == '') {
-    $GLOBALS ['cache'] = '0';
+    $GLOBALS ['cache'] = '600';
 }
 if (ENCODING != 'ENCODING' && file_exists('./cache/'.md5(username.language.$_SERVER ['REQUEST_URI'])) && filectime('./cache/'.md5(username.language.$_SERVER ['REQUEST_URI'])) > time() - $GLOBALS ['cache']) {
     header('Content-Encoding: '.ENCODING);
     readfile('./cache/'.md5(username.language.$_SERVER ['REQUEST_URI']));
     exit();
 }
-// </0min cache>
+// </10min cache>
 
 //////////////////////////// Functions ////////////////////////////////////////////////////////////////////////////////////////////
 // <templates>
