@@ -38,9 +38,11 @@ if(username != 'username') {
 }
 $result = sql_query("SELECT time FROM p_session WHERE username='$name'");
 if(sql_fetch_array($result)) {
-        sql_query("UPDATE p_session SET username='$name', time='" . time(). "', host_addr='" . $_SERVER['REMOTE_ADDR'] . "', local_addr='', guest='$guest' WHERE username='$name'");
+        $stmt = $mysqli->prepare("UPDATE p_session SET username = ?, time = ?, host_addr = ?, local_addr = ?, guest = ? WHERE username = ?");
+        $stmt->bind_param($name, time(), $_SERVER['REMOTE_ADDR'], '', $guest); $stmt->execute(); $stmt->close();
 } else {
-        sql_query("INSERT INTO p_session (username, time, host_addr, local_addr, guest) VALUES ('$name', '" . time(). "', '" . $_SERVER['REMOTE_ADDR'] . "', '', '$guest')");
+        $stmt = $mysqli->prepare("INSERT INTO p_session (username, time, host_addr, local_addr, guest) VALUES (?,?,?,?,?)");
+        $stmt->bind_param($name, time(), $_SERVER['REMOTE_ADDR'], '', $guest); $stmt->execute(); $stmt->close();
 }
 unset($past);
 unset($name);
