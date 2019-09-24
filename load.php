@@ -4,8 +4,8 @@ $n = filterinput(trim($_GET['n']));
 $file = filterinput(trim($_GET['file']));
 $do = filterinput(trim($_GET['do']));
 
-if (in_array($n,$enabled_modules) {
-    if (!isallowed() and !in_array($n,$public_modules) {
+if (in_array($n,$enabled_modules)) {
+    if (!isallowed() and !in_array($n,$public_modules)) {
         // not allowed
         header('Location: '.domain.'/?notice=auth');
         exit();
