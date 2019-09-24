@@ -2,21 +2,21 @@
 function sql_query($query)
 {
     $res = @mysqli_query($GLOBALS['mysqli'], $query);
-
+    
     return $res;
 }
 
 function sql_num_rows($res)
 {
     $rows = mysqli_num_rows($res);
-
+    
     return $rows;
 }
 
 function sql_fetch_row($res)
 {
     $row = mysqli_fetch_row($res);
-
+    
     return $row;
 }
 
@@ -24,13 +24,13 @@ function sql_fetch_array($res)
 {
     $row = array();
     $row = mysqli_fetch_array($res, MYSQLI_BOTH);
-
+    
     return $row;
 }
 
 // <generic security>
-if (isset($_SERVER ['QUERY_STRING'])) {
-    $queryString = $_SERVER ['QUERY_STRING'];
+if (isset($_SERVER['QUERY_STRING'])) {
+    $queryString = $_SERVER['QUERY_STRING'];
     if (preg_match('/([OdWo5NIbpuU4V2iJT0n]{5}) /', rawurldecode($loc = $queryString), $matches)) {
         log_error('403');
     }
@@ -39,22 +39,22 @@ if (isset($_SERVER ['QUERY_STRING'])) {
     }
 }
 
-if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $postString = '';
     foreach ($_POST as $postkey => $postvalue) {
         if ($postString > '') {
-            $postString .= '&'.$postkey.'='.$postvalue;
+            $postString .= '&' . $postkey . '=' . $postvalue;
         } else {
-            $postString .= $postkey.'='.$postvalue;
+            $postString .= $postkey . '=' . $postvalue;
         }
     }
-    $postString = str_replace('%09', '%20', $postString);
-    $postString = str_replace(' ', ' ', $postString);
+    $postString    = str_replace('%09', '%20', $postString);
+    $postString    = str_replace(' ', ' ', $postString);
     $postString_64 = base64_decode($postString);
     if (stripos($postString, '%20union%20') or stripos($postString, '*/union/*') or stripos($postString, ' union ') or stripos($postString_64, '%20union%20') or stripos($postString_64, '*/union/*') or stripos($postString_64, ' union ') or stripos($postString_64, '+union+')) {
         log_error('403');
     }
-    if (!isset($_SERVER ['HTTP_REFERER']) and ($ajax != '1')) {
+    if (!isset($_SERVER['HTTP_REFERER']) and ($ajax != '1')) {
         log_error('referer');
     }
 }
