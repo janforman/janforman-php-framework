@@ -29,6 +29,7 @@ $starttime = $starttime [1] + $starttime [0];
 
 // <online>
 $past = time()- 3600;
+$guest = 0;
 sql_query("DELETE FROM p_session WHERE time < $past");
 if(username != 'username') {
         $name = username;
