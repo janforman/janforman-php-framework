@@ -5,10 +5,9 @@ if (stristr(htmlentities($_SERVER ['PHP_SELF']), 'init.php')) {
 
 require './config.php';
 mb_internal_encoding('UTF-8');
-$GLOBALS['mysqli'] = mysqli_connect($mariadb['ip'], $mariadb['name'], $mariadb['pass'], $mariadb['db']);
-if (!$GLOBALS['mysqli']) {
-    log_error('mariadb disconnected');
-}
+$mysqli = new mysqli($mariadb['ip'], $mariadb['name'], $mariadb['pass'], $mariadb['db']);
+if (mysqli_connect_errno()) { log_error('mariadb disconnected'); }
+
 require './legacy.php';
 
 if ('https://'.$_SERVER ['HTTP_HOST'] != domain) {
