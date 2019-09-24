@@ -7,6 +7,7 @@ require './config.php';
 mb_internal_encoding('UTF-8');
 $mysqli = new mysqli($mariadb['ip'], $mariadb['name'], $mariadb['pass'], $mariadb['db']);
 if (mysqli_connect_errno()) { log_error('mariadb disconnected'); }
+$mysqli->set_charset("utf8mb4");
 
 require './legacy.php';
 
