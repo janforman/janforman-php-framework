@@ -127,16 +127,12 @@ function template_end()
     $endtime = $endtime [1] + $endtime [0];
     $totaltime = round(($endtime - $starttime), 3);
     $memory = round(memory_get_usage() / 1024);
-    if ($GLOBALS ['cache'] != 86400) {
-        $GLOBALS ['cache'] = '0';
-    } // SECURITY REASON!!! Even allow some caching if forced
     if ($GLOBALS ['cache'] == '0') {
         echo "\n\n<!-- janforman.com-framework/time:".$totaltime.'s/'.$memory.'kb/cache off/online:'.online." -->\n";
     } else {
         echo "\n\n<!-- janforman.com-framework/time:".$totaltime.'s/'.$memory.'kb/'.ENCODING.'/cached/'.date('H:i').'/expiration:'.$GLOBALS ['cache']."s -->\n";
     }
-
-        // </debug>
+    // </debug>
 
     if (ENCODING != 'ENCODING') {
         header('Content-Encoding: '.ENCODING);
