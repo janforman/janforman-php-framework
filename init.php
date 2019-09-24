@@ -100,6 +100,9 @@ function template_start($title, $css)
     echo "<link rel='manifest' href='/manifest.json'>";
     echo '<title>'.$title."</title>\n";
 
+    echo '<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>'."\n";
+    echo '<link rel="stylesheet" href="/css/default.css?r=' . version . '" type="text/css"/>'."\n";
+    if($css) { echo "<link rel=\"stylesheet\" href=\"/css/$css\" type=\"text/css\"/>\n"; }
     echo '<link rel="stylesheet" href="/css/jquery-ui.css">';
     echo '<link rel="stylesheet" href="/js/fontawesome-5.3.1/css/all.min.css">';
     echo '<script src="/js/jquery-1.10.2.min.js"></script>';
