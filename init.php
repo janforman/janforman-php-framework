@@ -164,11 +164,9 @@ function template_end()
             fwrite($f, $gzip_final);
             fclose($f);
         }
-        $mysqli->close();
         exit();
     } else {
         ob_end_flush();
-        $mysqli->close();
     }
 }
 // </templates>
