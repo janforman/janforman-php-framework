@@ -1,4 +1,8 @@
 <?php
+if (stristr(htmlentities($_SERVER ['PHP_SELF']), 'init.php')) {
+    exit();
+}
+
 require './config.php';
 mb_internal_encoding('UTF-8');
 $GLOBALS['mysqli'] = mysqli_connect($mariadb['ip'], $mariadb['name'], $mariadb['pass'], $mariadb['db']);
@@ -6,6 +10,126 @@ if (!$GLOBALS['mysqli']) {
     log_error('mariadb disconnected');
 }
 require './legacy.php';
+
+if ($_SERVER ['HTTP_HOST'] != domain) {
+    header('Location: https://'.domain.$_SERVER ['REQUEST_URI']);
+    exit();
+}
+if (strpos($_SERVER ['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
+    define('ENCODING', 'x-gzip');
+}
+if (strpos($_SERVER ['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
+    define('ENCODING', 'gzip');
+}
+
+// <timedebug>
+$starttime = explode(' ', microtime());
+$starttime = $starttime [1] + $starttime [0];
+// </timedebug>
+
+// <online>
+$past = time() - 1800;
+sql_query('DELETE FROM '.prefix."_session WHERE time < $past");
+
+
+// <language>
+define('language', czech);
+include './lang/'.language.'.lng';
+
+// <0min cache>
+if ($GLOBALS ['cache'] == '') {
+    $GLOBALS ['cache'] = '0';
+}
+if (ENCODING != 'ENCODING' && file_exists('./cache/'.md5(username.language.$_SERVER ['REQUEST_URI'])) && filectime('./cache/'.md5(username.language.$_SERVER ['REQUEST_URI'])) > time() - $GLOBALS ['cache']) {
+    header('Content-Encoding: '.ENCODING);
+    readfile('./cache/'.md5(username.language.$_SERVER ['REQUEST_URI']));
+    exit();
+}
+// </0min cache>
+
+//////////////////////////// Functions ////////////////////////////////////////////////////////////////////////////////////////////
+// <templates>
+function template_start($title, $css)
+{
+    ob_start();
+    ob_implicit_flush(0);
+    echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
+    echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n";
+    echo "<head>\n";
+    echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"/>\n";
+    echo "<meta http-equiv=\"cache-control\" content=\"no-cache\"/>\n<meta http-equiv=\"pragma\" content=\"no-cache\"/>\n";
+    echo "<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\"/>\n";
+    echo "<meta name='viewport' content='width=1000, maximum-scale=1.0, user-scalable=yes'/>\n";
+    echo "<meta http-equiv=\"Content-Style-Type\" content=\"text/css\"/>\n";
+    echo "<meta name=\"theme-color\" content=\"#3366cc\" /><meta name=\"msapplication-TileColor\" content=\"#3366cc\" />\n";
+    echo "<link rel='manifest' href='/manifest.json'>";
+    echo '<title>'.$title."</title>\n";
+
+    echo '<link rel="stylesheet" href="/css/jquery-ui.css">';
+    echo '<link rel="stylesheet" href="/js/fontawesome-5.3.1/css/all.min.css">';
+    echo '<script src="/js/jquery-1.10.2.min.js"></script>';
+    echo '<script src="/js/ui/1.10.2/jquery-ui.js"></script>';
+
+    echo "<link rel='shortcut icon' href='/favicon.ico' type='image/x-icon'/>\n";
+    echo "<link rel='stylesheet' href='/css/default.css?v=".version."' type='text/css'/>\n";
+    echo "\n</head>\n<body>\n";
+}
+
+function template($template, $data)
+{
+    if (file_exists('./templates/'.$template)) {
+        require './templates/'.$template;
+    } else {
+        log_error('template-'.$template);
+    }
+}
+
+function template_end()
+{
+    global $starttime;
+    echo "\n</body>\n</html>";
+    // <debug>
+    $endtime = explode(' ', microtime());
+    $endtime = $endtime [1] + $endtime [0];
+    $totaltime = round(($endtime - $starttime), 3);
+    $memory = round(memory_get_usage() / 1024);
+    if ($GLOBALS ['cache'] != 86400) {
+        $GLOBALS ['cache'] = '0';
+    } // SECURITY REASON!!! Even allow some caching if forced
+    if ($GLOBALS ['cache'] == '0') {
+        echo "\n\n<!-- janforman.com-framework/time:".$totaltime.'s/'.$memory.'kb/cache off/online:'.online." -->\n";
+    } else {
+        echo "\n\n<!-- janforman.com-framework/time:".$totaltime.'s/'.$memory.'kb/'.ENCODING.'/cached/'.date('H:i').'/expiration:'.$GLOBALS ['cache']."s -->\n";
+    }
+
+        // </debug>
+
+    if (ENCODING != 'ENCODING') {
+        header('Content-Encoding: '.ENCODING);
+        $gzip_size = ob_get_length();
+        $gzip_contents = ob_get_clean();
+        $gzip_final = "\x1f\x8b\x08\x00\x00\x00\x00\x00".substr(gzcompress($gzip_contents, 6), 0, -4).pack('V', crc32($gzip_contents)).pack('V', $gzip_size);
+        echo $gzip_final;
+        if ($GLOBALS ['cache'] != '0') {
+            $f = fopen('./cache/'.md5(username.language.$_SERVER ['REQUEST_URI']), 'w+');
+            fwrite($f, $gzip_final);
+            fclose($f);
+        }
+        mysqli_close();
+        exit();
+    } else {
+        ob_end_flush();
+        mysqli_close();
+    }
+}
+// </templates>
+
+function filterinput($string)
+{
+    preg_match_all("/[\@\\.\s\w\p{L}\p{N}\p{Pd}]/u", $string, $result);
+
+    return implode('', $result[0]);
+}
 
 function log_error($reason)
 {
