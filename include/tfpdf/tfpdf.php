@@ -7,7 +7,7 @@
  * Date:     2011-09-24
  * Author:   Ian Back <ianb@bpm1.com>
  * License:  LGPL
- ***********************************
+ ***********************************/
 define('tFPDF_VERSION', '1.24');
 
 class tFPDF {
