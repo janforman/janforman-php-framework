@@ -1,18 +1,23 @@
 <?php
 if(!stristr(htmlentities($_SERVER['PHP_SELF']), 'load.php'))
-        exit();
-
+	exit();
 if(empty($user)|| empty($pass))
 	exit;
 ///
-if(authenticate($user, $pass)) {
+if($level = authenticate($user, $pass)) {
+	if($level == 1)
+		unset ($level);
+	if($level == 2)
+		$level = 'kurzy';
+	if($level == 3)
+		$level = 'gps kurzy admin';
 	$usertoken = md5(RandomString());
 	$result = sql_query("SELECT uid FROM portal.m_users WHERE username='$user' LIMIT 1");
 	$dbdata = sql_fetch_array($result);
 	if($dbdata['uid'])
-		sql_query("UPDATE portal.m_users SET password='$usertoken' WHERE username='$user' LIMIT 1");
+		sql_query("UPDATE portal.m_users SET password='$usertoken', access='$level' WHERE username='$user' LIMIT 1");
 	else {
-		sql_query("INSERT INTO portal.m_users VALUES('','$user','$usertoken','$user".$GLOBALS['ldap_mail']."','','','','',NULL,NULL,'')");
+		sql_query("INSERT INTO portal.m_users VALUES('','$user','$usertoken','$user" . $GLOBALS['ldap_mail'] . "','','','','',NULL,'$level','')");
 		$result = sql_query("SELECT uid FROM portal.m_users WHERE username='$user' LIMIT 1");
 		$dbdata = sql_fetch_array($result);
 	}
