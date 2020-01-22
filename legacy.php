@@ -50,9 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (stripos($postString, '%20union%20') or stripos($postString, '*/union/*') or stripos($postString, ' union ') or stripos($postString_64, '%20union%20') or stripos($postString_64, '*/union/*') or stripos($postString_64, ' union ') or stripos($postString_64, '+union+')) {
         log_error('403');
     }
-    if (!isset($_SERVER['HTTP_REFERER']) and ($ajax != '1')) {
-        log_error('referer');
-    }
 }
 unset($matches, $loc, $queryString, $postString, $postString_64);
 // </genericsecurity>
