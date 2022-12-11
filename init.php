@@ -55,14 +55,14 @@ define('online', sql_num_rows(sql_query("SELECT time FROM p_session")));
 $newlang = $_GET['newlang'];
 $lang    = $_COOKIE['lang'];
 if (isset($newlang)) {
-    if (file_exists('./lang/' . $newlang . '.lng')) {
+    if (file_exists('./lang/' . $newlang . '.php')) {
         $language = $newlang;
         setcookie('lang', $language, time() + 31536000, null, null, null, true);
     } else {
         setcookie('lang', $language, time() + 31536000, null, null, null, true);
     }
 } elseif (isset($lang)) {
-    if (file_exists('./lang/' . $lang . '.lng')) {
+    if (file_exists('./lang/' . $lang . '.php')) {
         $language = $lang;
     } else {
         $language = 'english';
@@ -83,7 +83,7 @@ if (isset($newlang)) {
     }
     setcookie('lang', $language, time() + 31536000, null, null, null, true);
 }
-include './lang/' . $language . '.lng';
+include './lang/' . $language . '.php';
 define('language', $language);
 unset($newlang);
 unset($lang);
@@ -129,8 +129,8 @@ function template_start($title, $css)
 }
 function template($template, $data)
 {
-    if (file_exists('./templates/' . $template)) {
-        require './templates/' . $template;
+    if (file_exists('./templates/' . $template . '.php')) {
+        require './templates/' . $template . '.php';
     } else {
         log_error('template-' . $template);
     }
