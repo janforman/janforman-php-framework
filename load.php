@@ -17,8 +17,8 @@ if (in_array($n,$enabled_modules)) {
         log_error('Security Alert');
     } else {
         $modpath = "./modules/$n/$file.php";
-        if (file_exists("./modules/$n/lang/".language.'.lng')) {
-            include "./modules/$n/lang/".language.'.lng';
+        if (file_exists("./modules/$n/lang/".language.'.php')) {
+            include "./modules/$n/lang/".language.'.php';
         }
         if (file_exists($modpath)) {
             include $modpath;
