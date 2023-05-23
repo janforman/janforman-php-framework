@@ -116,6 +116,7 @@ function template_start($title, $css)
     echo "<meta name=\"theme-color\" content=\"#3366cc\" /><meta name=\"msapplication-TileColor\" content=\"#3366cc\" />\n";
     echo "<link rel='manifest' href='/manifest.json'>";
     echo '<title>' . $title . "</title>\n";
+    echo '<meta name="description" content="' . description . "\" />\n";
     echo '<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>' . "\n";
     echo '<link rel="stylesheet" href="/css/default.css?r=' . version . '" type="text/css"/>' . "\n";
     if ($css) {
