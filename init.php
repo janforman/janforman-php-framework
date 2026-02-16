@@ -113,8 +113,8 @@ function template_start($title, $css)
     echo "<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\"/>\n";
     echo "<meta name='viewport' content='width=1000, maximum-scale=1.0, user-scalable=yes'/>\n";
     echo "<meta http-equiv=\"Content-Style-Type\" content=\"text/css\"/>\n";
-    echo "<meta name=\"theme-color\" content=\"#3366cc\" /><meta name=\"msapplication-TileColor\" content=\"#3366cc\" />\n";
-    echo "<link rel='manifest' href='/manifest.json'>";
+    echo "<meta name=\"theme-color\" content=\"#3366cc\" /><meta name=\"msapplication-TileColor\" content=\"#3366cc\"/>\n";
+    echo "<link rel='manifest' href='/manifest.json'/>";
     echo '<title>' . $title . "</title>\n";
     echo '<meta name="description" content="' . description . "\" />\n";
     echo '<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>' . "\n";
