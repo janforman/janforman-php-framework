@@ -122,8 +122,8 @@ function template_start($title, $css)
     if ($css) {
         echo "<link rel=\"stylesheet\" href=\"/css/$css\" type=\"text/css\"/>\n";
     }
-    echo "<link rel='stylesheet' href='/css/jquery-ui.css'>\n";
-    echo "<link rel='stylesheet' href='/assets/fontawesome-free-5.11.2/css/all.min.css'>\n";
+    echo "<link rel='stylesheet' href='/css/jquery-ui.css'/>\n";
+    echo "<link rel='stylesheet' href='/assets/fontawesome-free-5.11.2/css/all.min.css'/>\n";
     echo '<script src="/js/jquery-1.10.2.min.js"></script><script src="/js/ui/1.10.2/jquery-ui.js"></script>';
     echo '<script src="/js/generic.js" type="text/javascript"></script>';
     echo "\n</head>\n<body>\n";
