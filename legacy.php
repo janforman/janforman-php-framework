@@ -30,8 +30,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
     if (preg_match('/([OdWo5NIbpuU4V2iJT0n]{5}) /', rawurldecode($loc = $queryString), $matches)) {
         log_error('403');
     }
-    if (stripos($queryString, 'group by') or stripos($queryString, '%20union%20') or stripos($queryString, '%09union%09') or stripos($queryString, '/*') or stripos($queryString, '*/union/*') or stripos($queryString, 'c2nyaxb0') or stripos($queryString, '+union+') or (stripos($queryString, 'cmd=') and !stripos($queryString, '&cmd')) or (stripos($queryString, 'exec') and !stripos($queryString, 'execu')) or stripos($queryString, 'concat')) {
-        log_error('403');
+ if (stripos($queryString, 'group by') or stripos($queryString, 'union%20') or stripos($queryString, '%09union%09') or stripos($queryString, '/*') or stripos($queryString, '*/union/*') or stripos($queryString, 'c2nyaxb0') or stripos($queryString, '+union+') or (stripos($queryString, 'cmd=') and !stripos($queryString, '&cmd')) or (stripos($queryString, 'exec') and !stripos($queryString, 'execu')) or stripos($queryString, 'concat') or stripos($queryString, 'select ') or stripos($queryString, 'drop ')) {
+     log_error('403');
     }
 }
 
